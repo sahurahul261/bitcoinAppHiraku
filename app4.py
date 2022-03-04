@@ -12,7 +12,7 @@ import pickle
 import plotly.offline as py 
 from plotly.figure_factory import create_table 
 import plotly.express as px   
-import time
+import _tkinter
 
 START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
