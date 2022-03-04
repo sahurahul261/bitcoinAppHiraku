@@ -1,0 +1,104 @@
+""""
+#lin_svr = SVR(kernel='linear', C=1000,gamma="scale")
+#lin_svr.fit (days, adj_close_prices)
+print("done1")
+# save the model to disk
+filename1 = 'lin_svr.sav'  # for lin
+pickle.dump(lin_svr, open(filename1, 'wb'))
+
+
+#rbf_svr = SVR(kernel='rbf', C=1000.0, gamma=0.15)
+#rbf_svr.fit (days, adj_close_prices)
+print("done2")
+
+filename2 = 'rbf_svr.sav'  #for rbf
+pickle.dump(rbf_svr, open(filename2, 'wb'))
+
+
+
+#poly_svr = SVR(kernel='poly', C=1000.0, degree=3)
+#poly_svr.fit (days, adj_close_prices)
+print("done3")
+filename3 = 'poly_svr.sav' # for poly
+pickle.dump(poly_svr, open(filename3, 'wb'))
+"""
+# some time later...
+ 
+# load the model from disk
+
+
+
+
+
+
+'''
+#initialising the RNN
+regressor=Sequential()
+
+regressor.add(LSTM(units =50, return_sequences= True, input_shape =(X_train.shape[1],1) ))
+regressor.add(Dropout(0.2))
+
+
+#Adding  a second LSTM layer and some Dropout regularization
+regressor.add(LSTM(units = 50 , return_sequences=True))
+regressor.add(Dropout(0.2))
+
+
+# Adding a third LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50,return_sequences=True))
+regressor.add(Dropout(0.2))
+
+#adding a forth LSTM layer and some Dropout regularisation
+regressor.add(LSTM(units=50))
+regressor.add(Dropout(0.2))
+
+
+#adding the output layer 
+regressor.add(Dense(units=1))
+
+regressor.compile(optimizer= 'adam',loss='mean_squared_error')
+regressor.fit(X_train,y_train,epochs=60,batch_size=20)
+
+# save the model to disk
+# for lin
+
+pickle.dump(regressor, open('lstm.sav', 'wb'))
+# some time later...
+ '''
+
+
+ regressor=Sequential()
+
+regressor.add(LSTM(units =50, return_sequences= True, input_shape =(X_train.shape[1],1) ))
+regressor.add(Dropout(0.2))
+
+
+#Adding  a second LSTM layer and some Dropout regularization
+regressor.add(LSTM(units = 50 , return_sequences=True))
+regressor.add(Dropout(0.2))
+
+
+# Adding a third LSTM layer and some dropout regularization
+regressor.add(LSTM(units=50,return_sequences=True))
+regressor.add(Dropout(0.2))
+
+#adding a forth LSTM layer and some Dropout regularisation
+regressor.add(LSTM(units=50))
+regressor.add(Dropout(0.2))
+
+
+#adding the output layer 
+regressor.add(Dense(units=1))
+
+regressor.compile(optimizer= 'adam',loss='mean_squared_error')
+regressor.fit(X_train,y_train,epochs=60,batch_size=20)
+
+
+regressor.save("model.h5")
+print("Saved model to disk")
+
+# load and evaluate a saved model
+from numpy import loadtxt
+from keras.models import load_model
+ 
+# load model
