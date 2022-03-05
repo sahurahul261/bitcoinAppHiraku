@@ -230,4 +230,3 @@ st.subheader("For this  prediction Long Short Term  Memory Technique of Deep Lea
 
 df=pd.read_csv("sevendaybitcoin.csv")
 df["lstm"]=lstm_result["Predicted_Price"]
-df.to_csv("sevendaybitcoin.csv")

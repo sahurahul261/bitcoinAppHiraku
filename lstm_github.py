@@ -15,7 +15,7 @@ START = "2015-01-01"
 TODAY = date.today().strftime("%Y-%m-%d")
 
 st.title("Price Prediction App (deep learning Embedded)")
-coins = ("BTC-USD", "ETH-USD","DOGE-USD","DOT-USD","SOL-USD")
+coins = ("BTC-USD","ETH-USD")
 selected_coin= st.selectbox(" Select *Cryptocurrency*",coins)
 day=st.slider("No of days prediction",1,15)
 algos=("Machine Learning -Random Forest","Deep Learning- LSTM")
@@ -50,21 +50,17 @@ fig1=fig.history(period="1d",start=START,end=TODAY)
 
 st.write(" Line chart for **Close price** ")
 st.line_chart(fig1.Close)
-st.write(" Line chart for **High** ")
-st.line_chart(fig1.High)
-st.write(" Area chart for **Close price** ")
-st.area_chart(fig1.Close)
 
 
 
-df1=df['Close'].head(len(df)-day)
-actual_close=df['Close'].tail(day)
+
+df1=df['Close']
 
 sc=MinMaxScaler(feature_range= (0,1))  #feature scaling 
 df1= sc.fit_transform(np.array(df1).reshape(-1,1))
 
 
-train_size=int (len(df1)*0.85)
+train_size=int(len(df1)*0.85)
 
 test_size=(len(df1)- train_size )
 train_data, test_data= df1[0:train_size,:], df1[train_size:len(df1),:1]  # test train split
@@ -83,7 +79,7 @@ def create_dataset(dataset,time_step=1):
 
 
 
-  #reshape into x=t,t+1,t+2,t+3 and y =t+4
+#reshape into x=t,t+1,t+2,t+3 and y =t+4
 time_step=100
 X_train, y_train = create_dataset(train_data,time_step)
 X_test,y_test =create_dataset(test_data,time_step)
@@ -162,7 +158,7 @@ print(lst_output)
 
 df3= sc.inverse_transform(lst_output) 
 
-lstm_result=pd.DataFrame(columns=['Date','Predicted_Price','Actual_Price'])
+lstm_result=pd.DataFrame(columns=['Date','Predicted_Price'])
 lstm_result.insert(0, 'Day', range(1, 1 + len(df3)))
 
 
@@ -170,7 +166,7 @@ lstm_result.insert(0, 'Day', range(1, 1 + len(df3)))
 
 print(type(df['Date'][0]))
 
-lstm_result['Actual_Price']=list(actual_close)
+
 lstm_result['Predicted_Price']=df3
 
 #Sid code
@@ -186,7 +182,7 @@ lstm_result['Predicted_Price']=df3
 current_time= date.today()
 
 for i in range(day):
-      lstm_result['Date'][i]=current_time-timedelta(days=(day-i))
+      lstm_result['Date'][i]=current_time+timedelta(days=(i))
 
       
 my_bar = st.progress(0)
@@ -211,8 +207,8 @@ with st.spinner('Wait for it...'):
 st.success('**Here is your result!**')
 st.subheader("Result Visualization")
 plt.figure(figsize=(25,9))
-plt.plot(lstm_result['Date'], lstm_result['Predicted_Price'], color="red", linewidth="3", label="predicted price")
-plt.plot(lstm_result['Date'], lstm_result['Actual_Price'], color="green",linewidth="3", label="Actual price")
+plt.plot(lstm_result['Date'], lstm_result['Predicted_Price'], color="red", linewidth="4", label="predicted price")
+
 plt.legend()
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.pyplot()
@@ -220,13 +216,4 @@ st.pyplot()
 plt.bar(lstm_result['Date'],lstm_result['Predicted_Price'], color="green")
 st.pyplot()
 
-
-mape_baseline =mean_absolute_percentage_error(lstm_result['Actual_Price'], lstm_result['Predicted_Price']) 
-mape_baseline
-
-st.write("**Mean Absolute Percent Error**",mape_baseline)
 st.subheader("For this  prediction Long Short Term  Memory Technique of Deep Learning is Used")
-
-df=pd.read_csv("sevendaybitcoin.csv")
-df["lstm"]=lstm_result["Predicted_Price"]
-df.to_csv("sevendaybitcoin.csv")
