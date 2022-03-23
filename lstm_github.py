@@ -93,12 +93,8 @@ X_test = np.reshape(X_test, (X_test.shape[0],X_test.shape[1],1))
 # part 2 - building the RNN
 #importing the keras library and packages
 
-import tensorflow as tf
-from keras.models import Sequential
-from keras.layers import *
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import Dropout
+
+
 
 #initialising the RNN
 
