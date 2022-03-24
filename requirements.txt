@@ -9,3 +9,4 @@ sklearn
 streamlit==1.5.1
 tk-tools
 yfinance==0.1.70
+tensorflow
