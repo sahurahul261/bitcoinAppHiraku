@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import plotly.figure_factory as ff
 from sklearn.preprocessing import MinMaxScaler
 from PIL import Image
-from flask import Flask
+
 #sevendaydf=pd.DataFrame(columns=['lin_svr','poly_svr','rbf_svr','lstm','rf'])
 
 
