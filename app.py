@@ -73,19 +73,6 @@ st.write(" Area chart for **Close price** ")
 st.area_chart(fig1.Close)
 
 
-#create sorrelation matrix
-import plotly as py
-import seaborn as sns
-if st.checkbox("**InterCorrelated Heatmap**"):
-    st.header('Intercorrelation matrix heatmap')
-    corr=df.corr()
-    mask=np.zeros_like(corr)
-    mask[np.triu_indices_from(mask)]=True
-    with sns.axes_style("white"):
-        f,ax=plt.subplots(figsize=(3,2))
-        ax=sns.heatmap(corr, mask=mask, vmax=1, square=True)
-        st.set_option('deprecation.showPyplotGlobalUse', False)
-    st.pyplot()
 
     
 forecast_out = day
