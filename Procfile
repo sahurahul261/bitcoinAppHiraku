@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run lstm_github.py
+web: sh setup.sh && streamlit run app.py
